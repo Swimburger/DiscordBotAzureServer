@@ -18,7 +18,7 @@ namespace RustServer
             this.vmName = vmName;
         }
 
-        public async Task<IVirtualMachine> GetVirtualMachineAsync()
+        public IAzure GetAzure()
         {
             AzureCredentials credentials = SdkContext.AzureCredentialsFactory.FromMSI(new MSILoginInformation(MSIResourceType.AppService), AzureEnvironment.AzureGlobalCloud);
 
@@ -27,7 +27,11 @@ namespace RustServer
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic)
                 .Authenticate(credentials)
                 .WithDefaultSubscription();
+            return azure;
+        }
 
+        public async Task<IVirtualMachine> GetVirtualMachineAsync(IAzure azure)
+        {
             return await azure.VirtualMachines.GetByResourceGroupAsync(resourceGroup, vmName);
         }
         public Task StartVirtualMachineAsync(IVirtualMachine vm)

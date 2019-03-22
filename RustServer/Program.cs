@@ -38,7 +38,8 @@ namespace RustServer
             {
                 if (e.Message.Content.ToLower().StartsWith("#!server start", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    IVirtualMachine vm = await virtualMachineService.GetVirtualMachineAsync();
+                    var azure = virtualMachineService.GetAzure();
+                    IVirtualMachine vm = await virtualMachineService.GetVirtualMachineAsync(azure);
                     if (vm.PowerState == PowerState.Running)
                     {
                         await e.Message.RespondAsync("Rust server is already running! It takes a few minutes before rust server is connectable.");
@@ -60,7 +61,8 @@ namespace RustServer
 
                 if (e.Message.Content.StartsWith("#!server stop", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    IVirtualMachine vm = await virtualMachineService.GetVirtualMachineAsync();
+                    var azure = virtualMachineService.GetAzure();
+                    IVirtualMachine vm = await virtualMachineService.GetVirtualMachineAsync(azure);
                     if (vm.PowerState == PowerState.Deallocated || vm.PowerState == PowerState.Deallocating || vm.PowerState == PowerState.Stopped)
                     {
                         await e.Message.RespondAsync("Rust server is stopped!");
