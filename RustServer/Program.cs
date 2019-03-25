@@ -11,7 +11,7 @@ namespace RustServer
     {
         private static DiscordClient discord;
         private static VirtualMachineService virtualMachineService;
-        private static Random random = new Random();
+        private static readonly Random random = new Random();
 
         public static async Task Main(string[] args)
         {
@@ -55,7 +55,7 @@ namespace RustServer
                     Task startTask = virtualMachineService.StartVirtualMachineAsync(vm);
                     await e.Message.RespondAsync("Starting Rust Server!");
                     await startTask;
-                    await e.Message.RespondAsync("Rust Server started, ETA 5 min until you can connect! Hell yeah bizzes.");
+                    await e.Message.RespondAsync("Rust Server started, ETA 5 min until you can connect! Let's get schwifty");
                     return;
                 }
 
