@@ -1,8 +1,10 @@
 ﻿using DSharpPlus;
 using DSharpPlus.EventArgs;
 using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.Compute.Fluent.Models;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace RustServer
@@ -55,7 +57,9 @@ namespace RustServer
                     Task startTask = virtualMachineService.StartVirtualMachineAsync(vm);
                     await e.Message.RespondAsync("Starting Rust Server!");
                     await startTask;
+                    await vm.RunPowerShellScriptAsync(new List<string> { "start \"c:\\RustServer\\Start.bat\" /REALTIME" }, new List<RunCommandInputParameter>());
                     await e.Message.RespondAsync("Rust Server started, ETA 5 min until you can connect! Let's get schwifty");
+                    await e.Message.RespondAsync("Press f1 and type 'client.connect rust.swimburger.net:28015'");
                     return;
                 }
 
