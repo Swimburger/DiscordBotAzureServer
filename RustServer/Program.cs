@@ -16,7 +16,6 @@ namespace RustServer
         private const string RustDiscordAdminRole = "rust-admin";
         private static DiscordClient discord;
         private static VirtualMachineService virtualMachineService;
-        private static readonly Random random = new Random();
 
         public static async Task Main(string[] args)
         {
